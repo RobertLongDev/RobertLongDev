@@ -1,0 +1,46 @@
+function _G.IsBurg(h,pt)
+		local req={'tbun','bbun','pat'}
+		local fix1,fix2=0,0
+	for _,v in pairs(req)do if h:FindFirstChild(v)then fix1=fix1+1 end end
+		req={}
+		if pt==1 then table.insert(req,#req+1,'che')
+		elseif pt==2 then table.insert(req,#req+1,'che')table.insert(req,#req+1,'let')
+		elseif pt==3 then table.insert(req,#req+1,'che')table.insert(req,#req+1,'to')
+		elseif pt==4 then table.insert(req,#req+1,'che')table.insert(req,#req+1,'bac')
+		elseif pt==5 then
+		end
+	for _,v in pairs(req)do if h:FindFirstChild(v)then fix2=fix2+1 end end
+	return fix1==3 and fix2==#req and 3 or fix1==3 and 2 or 0
+end
+
+db=0
+for s,v in pairs(workspace.NPC.Tabels:GetChildren())do
+v.t.Touched:connect(function(h)if v.Seat:FindFirstChild'br'and h.Parent.Name=='Mod'and h.Name=='pla'then
+	local bu=_G.IsBurg(h.Parent,v.Seat.br.Value) 
+if bu~=nil and db==0 then db=1
+v.Seat.br:Destroy()
+local pla=game.Lighting.Pick.pla:Clone()
+pla.CFrame=h.CFrame
+h.CFrame=CFrame.new(0,-100,0)
+pla.Material='Pebble'
+pla.cle.Value=false
+pla.Parent=workspace.Pick
+v.Seat.Taken.Value=false
+for i=1,bu do
+local m=game.Lighting.mon:Clone()m.CFrame=pla.CFrame+Vector3.new(0,.5+i/5)m.Parent=workspace.Pick
+wait(.2)
+end
+wait(.5)db=0
+end end end)end
+
+while wait(8)do
+local tem=game.Lighting.npc.npcs:GetChildren()[math.random(#game.Lighting.npc.npcs:GetChildren())]
+local npc=game.Lighting.npc.NPC:Clone()
+npc.Parent=workspace.NPC.Chi
+npc:MakeJoints()
+for _,v in pairs(tem:GetChildren())do if not npc:FindFirstChild(v.Name)then v:Clone().Parent=npc
+elseif v:IsA'BasePart'then npc[v.Name].BrickColor=v.BrickColor npc[v.Name].Transparency=v.Transparency end end
+for _,v in pairs(tem.Head:GetChildren())do v:Clone().Parent=npc.Head end
+local w=game.Lighting.npc.Walk:Clone()w.Parent=npc w.Disabled=false
+local w=game.Lighting.npc.Animation:Clone()w.Parent=npc w.Disabled=false
+end
